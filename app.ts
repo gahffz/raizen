@@ -19,8 +19,14 @@ app.listen(PORT, () => {
 })
 
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+    if(error instanceof SyntaxError && 'body' in error) {
+        res.status(400).json({ message: 'Malformed JSON' })
+        return
+    }
+
     if (error) {
         console.log(error)
-        res.send("Internal Error")
+        res.status(400).json({ message: "Internal Error"})
+        return
     }
 })
