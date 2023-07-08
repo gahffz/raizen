@@ -1,4 +1,4 @@
-import { ICreateUserUseCase, ICreateApprovalUseCase, ICreateSessionUseCase, IUserDao, IUserInput, ICreateUserResult } from "../../interfaces";
+import { ICreateUserUseCase, ICreateApprovalUseCase, ICreateSessionUseCase, IUserDao, IUserInput, IAccessAccountResult } from "../../interfaces";
 
 export class CreateUser implements ICreateUserUseCase {
     private userDb: IUserDao
@@ -15,7 +15,7 @@ export class CreateUser implements ICreateUserUseCase {
         this.createApprovalUseCase = createApprovalUseCase
     }
 
-    async execute(userInput: IUserInput): Promise<ICreateUserResult> {
+    async execute(userInput: IUserInput): Promise<IAccessAccountResult> {
         const user = await this.userDb.insert(userInput)
     
         const sessionPromise = this.createSessionUseCase.execute(user._id)

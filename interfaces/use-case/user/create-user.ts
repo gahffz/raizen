@@ -1,5 +1,5 @@
-import { ICreateUserResult, IUserInput } from "../../models";
+import { IAccessAccountResult, IUserInput } from "../../models";
 
 export interface ICreateUserUseCase {
-    execute(userInput: IUserInput): Promise<ICreateUserResult>
+    execute(userInput: IUserInput): Promise<IAccessAccountResult>
 }
