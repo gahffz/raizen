@@ -1,4 +1,4 @@
-export type ICreateUserResult = {
+export type IAccessAccountResult = {
     uid: string,
     session: {
         token: string,
