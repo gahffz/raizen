@@ -2,18 +2,40 @@ import { IValidator, Length, Range, ErrorMessage } from "../interfaces/utils/val
 
 export class Validator implements IValidator {
     checkNonNullString(value: any, length: Length, error: ErrorMessage): string {
-        const result = this.checkNullableString(value, length, error)
-        return result? result : ""
+        // If it's 'null' or 'undefined, returns it
+        if (value === null || typeof value === 'undefined') {
+            error("input is '" + typeof value + "'")
+            return ""
+        }
+
+        // If it isn't a 'string', returns undefined
+        if (typeof value !== 'string') {
+            error("input must be a 'string'. But found '" + typeof value + "'")
+            return ""
+        }
+
+        // Checks string length
+        if (length) {
+            if ((length.min && value.length < length.min) || (length.max && value.length > length.max)) {
+                error("input's length must be between " + (length?.min ?? 0) + "-" + (length?.max ?? "unlimited"))
+            }
+        }
+        return value
     }
 
-    checkNullableString(value: any, length: Length, error: ErrorMessage): string|undefined {
-        if (!value || typeof value !== 'string') {
+    checkNullableString(value: any, length: Length, error: ErrorMessage): string|null|undefined {
+        // If it's 'null' or 'undefined, returns it
+        if (value === null || typeof value === 'undefined') {
             return value
         }
+
+        // If it isn't a 'string', returns undefined
         if (typeof value !== 'string') {
-            error("input must be a string")
+            error("input must be a 'string'. But found '" + typeof value + "'")
             return undefined
         }
+
+        // Checks string length
         if (length) {
             if ((length.min && value.length < length.min) || (length.max && value.length > length.max)) {
                 error("input's length must be between " + (length?.min ?? 0) + "-" + (length?.max ?? "unlimited"))
@@ -24,10 +46,15 @@ export class Validator implements IValidator {
 
     checkNonNullNumber(value: any, range: Range, error: ErrorMessage): number {
         const result = this.checkNullableNumber(value, range, error)
-        return result? result : 0
+        if (result) {
+            return result
+        } else {
+            error("input is '" + typeof result + "'")
+            return 0
+        }
     }
 
-    checkNullableNumber(value: any, range: Range, error: ErrorMessage): number|undefined {
+    checkNullableNumber(value: any, range: Range, error: ErrorMessage): number|null|undefined {
         if (!value) {
             return value
         }
