@@ -10,6 +10,11 @@ const approvalSchema = new Schema({
         type: String, 
         required: true
     },
+    invalidated: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
 }, {
     timestamps: true
 })
