@@ -5,6 +5,7 @@ export interface IApprovalInput {
 
 export interface IApproval extends IApprovalInput {
     _id: string
+    invalidated: boolean
     createdAt: Date
     updatedAt: Date
 }
