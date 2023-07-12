@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { IApprovalController } from "../interfaces/controller/approval.controller";
-import { IApprovalRepository } from "../interfaces/repository/approval.repository";
 import { HttpError, validator } from "../utils";
+import { IApprovalController, IApprovalRepository } from "../interfaces";
 
 export class ApprovalController implements IApprovalController {
     private approvalRepository: IApprovalRepository
