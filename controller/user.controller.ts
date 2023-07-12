@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, response } from "express";
 import { IUserController, IUserRepository, IValidator } from "../interfaces";
 
 export class UserController implements IUserController {
@@ -10,6 +10,7 @@ export class UserController implements IUserController {
         this.validator = validator
 
         this.createAccount = this.createAccount.bind(this)
+        this.login = this.login.bind(this)
     }
 
     createAccount(req: Request, res: Response, next: NextFunction): void {
@@ -67,6 +68,38 @@ export class UserController implements IUserController {
         })
         .then((createUserResult) => {
             res.send(JSON.stringify(createUserResult))
+        })
+        .catch((error) => {
+            next(error)
+        })
+    }
+
+    login(req: Request, res: Response, next: NextFunction): void {
+        const errors = Array<string>()
+
+        const username = this.validator.checkNonNullString(req.body.username, { min: 6, max: 6 }, (error) => {
+            errors.push('username: ' + error)
+        })
+        const password = this.validator.checkNonNullString(req.body.password, { min: 8, max: 16 }, (error) => {
+            errors.push('password: ' + error)
+        })
+
+        if (errors.length !== 0) {
+            res.send(JSON.stringify({
+                errors: errors
+            }))
+            return
+        }
+
+        this.repository.login(username, password)
+        .then((createUserResult) => {
+             if (createUserResult) {
+                res.send(JSON.stringify(createUserResult))
+             } else {
+                res.send(JSON.stringify({
+                    message: 'Invalid username and/or password. Try again'
+                }))
+             }
         })
         .catch((error) => {
             next(error)
