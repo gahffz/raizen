@@ -13,6 +13,7 @@ export interface IUserInput {
 
 export interface IUser extends IUserInput {
     _id: string,
+    accountType: number,
     approved: boolean
     createdAt: Date
     updatedAt: Date
