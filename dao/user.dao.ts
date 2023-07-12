@@ -5,17 +5,17 @@ import { Types } from "mongoose"
 export class UserDao implements IUserDao {
     async find(filter?: Object): Promise<Array<IUser>> {
         const users = filter? await UserModel.find(filter) : await UserModel.find()
-        return users.map((user) => parse(user))
+        return users.map((user) => parse(user.toObject()))
     }
 
     async findOne(filter: Object): Promise<IUser|null> {
         const user = await UserModel.findOne(filter)
-        return user ? parse(user) : null
+        return user ? parse(user.toObject()) : null
     }
 
     async findById(id: string): Promise<IUser|null> {
         const user = await UserModel.findById(id)
-        return user ? parse(user) : null
+        return user ? parse(user.toObject()) : null
     }
 
     async insert(user: IUserInput): Promise<IUser> {
@@ -25,7 +25,7 @@ export class UserDao implements IUserDao {
 
     async update(user: IUser): Promise<IUser|null> {
         const _user = await UserModel.findByIdAndUpdate(user._id, user, { new: true })
-        return _user ? parse(_user) : null
+        return _user ? parse(_user.toObject()) : null
     }
 
     async removeById(id: string): Promise<boolean> {

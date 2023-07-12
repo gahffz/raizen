@@ -5,17 +5,17 @@ import { Session, SessionModel } from "../models";
 export class SessionDao implements ISessionDao {
     async find(filter?: Object | undefined): Promise<Array<ISession>> {
         const sessions = filter ? await SessionModel.find(filter) : await SessionModel.find()
-        return sessions.map((session) => parse(session))
+        return sessions.map((session) => parse(session.toObject()))
     }
 
     async findOne(filter: Object): Promise<ISession | null> {
         const session = await SessionModel.findOne(filter)
-        return session ? parse(session) : null
+        return session ? parse(session.toObject()) : null
     }
 
     async findById(id: string): Promise<ISession | null> {
         const session = await SessionModel.findById(id)
-        return session ? parse(session) : null
+        return session ? parse(session.toObject()) : null
     }
 
     async insert(sessionInput: ISessionInput): Promise<ISession> {
@@ -25,7 +25,7 @@ export class SessionDao implements ISessionDao {
 
     async update(session: ISession): Promise<ISession | null> {
         const _session = await SessionModel.findByIdAndUpdate(session._id, session)
-        return _session ? parse(_session) : null
+        return _session ? parse(_session.toObject()) : null
     }
 
     async removeById(id: string): Promise<boolean> {
