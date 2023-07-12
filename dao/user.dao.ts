@@ -25,7 +25,7 @@ export class UserDao implements IUserDao {
 
     async update(user: IUser): Promise<IUser|null> {
         const _user = await UserModel.findByIdAndUpdate(user._id, user, { new: true })
-        return _user ? parse(_user.toObject()) : null
+        return _user ? parse(_user.toObject() ) : null
     }
 
     async removeById(id: string): Promise<boolean> {
