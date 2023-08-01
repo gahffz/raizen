@@ -4,6 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon dist/app.js\"",
+    "start": "node dist/app.js",
     "test": "jest"
   },
   "author": "Hutchz",
