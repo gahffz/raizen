@@ -1,4 +1,4 @@
-export class HttpClientError extends Error {
+export default class HttpClientError extends Error {
     status: number
 
     constructor(status: number, message: any) {        
