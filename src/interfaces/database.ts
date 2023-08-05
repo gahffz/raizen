@@ -1,5 +1,6 @@
-import { UserRepository } from "./repositories";
+import { SessionRepository, UserRepository } from "./repositories";
 
 export interface Database {
-    user: UserRepository
+    user: UserRepository, 
+    session: SessionRepository
 }

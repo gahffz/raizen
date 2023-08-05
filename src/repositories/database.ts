@@ -1,9 +1,10 @@
 import { Database } from "../interfaces/database";
-import { UserRepository } from "../interfaces/repositories";
-import UserMongoRepository from "./mongoose/user.repository";
+import { SessionRepository, UserRepository } from "../interfaces/repositories";
+import { SessionMongoRepository, UserMongoRepository } from "./mongoose";
 
 class MongoDatabase implements Database {
     user: UserRepository = new UserMongoRepository()
+    session: SessionRepository = new SessionMongoRepository()
 }
 
 export {
