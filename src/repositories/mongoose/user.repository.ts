@@ -32,6 +32,10 @@ export default class UserMongoRepository implements UserRepository {
         const document = await UserModel.findOneAndUpdate(id, { verified })
         return parseNullable(document)
     }
+    async updateAccountType(id: any, accountType: number): Promise<User | null> {
+        const document = await UserModel.findByIdAndUpdate(id, { accountType })
+        return parseNullable(document)
+    }
     async delete(id: any): Promise<any> {
         const document = await UserModel.findOneAndDelete(id)
         return parseNullable(document)

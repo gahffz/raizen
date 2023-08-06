@@ -15,5 +15,7 @@ export default interface UserRepository {
 
     updateVerification(id: any, verified: boolean): Promise<User | null>
 
+    updateAccountType(id: any, accountType: number): Promise<User | null>
+
     delete(id: any): Promise<any>
 }
