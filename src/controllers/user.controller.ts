@@ -6,11 +6,13 @@ import { HttpClientError } from "../errors";
 import { userDtoValidation } from "../validations/dto";
 import SessionService from "../services/session.service";
 import { LoginResponse } from "../responses";
+import VerificationService from "../services/verification.service";
 
 export default class UserController {
     constructor(
         private userService: UserService, 
-        private sessionService: SessionService
+        private sessionService: SessionService, 
+        private verificationService: VerificationService
     ) {
         this.siginup = this.siginup.bind(this)
     }
@@ -37,7 +39,8 @@ export default class UserController {
 
         this.userService.createUser(user).then(user => {
             const sessionPromise = this.sessionService.createSession(user.id)
-            Promise.all([sessionPromise]).then(results => {
+            const verificationPromise = this.verificationService.createVerification(user.id)
+            Promise.all([sessionPromise, verificationPromise]).then(results => {
                 const [session] = results
 
                 if (!session.id) {
