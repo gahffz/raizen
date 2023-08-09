@@ -8,6 +8,10 @@
     "start": "node dist/app.js",
     "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "github.com/gahffz/raizen"
+  },
   "author": "Hutchz",
   "license": "ISC",
   "dependencies": {
