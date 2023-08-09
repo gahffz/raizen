@@ -12,6 +12,10 @@ export default class UserMongoRepository implements UserRepository {
         const document = await UserModel.findById(id)
         return parseNullable(document)
     }
+    async getByUsername(username: string): Promise<User | null> {
+        const document = await UserModel.findOne({ username })
+        return parseNullable(document)
+    }
     async create(user: User): Promise<User> {
         const document = await UserModel.create(user)
         return parseNonNull(document)

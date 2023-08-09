@@ -5,6 +5,8 @@ export default interface UserRepository {
 
     getById(id: string): Promise<User | null>
 
+    getByUsername(username: string): Promise<User | null>
+
     create(user: User): Promise<User>
 
     updatePersonalInfo(id: any, user: UserPersonalInfoUpdate): Promise<User | null>

@@ -1,5 +1,6 @@
 import express from "express"
-import { adminController } from "../controllers"
+import { accountController, adminController } from "../controllers"
+import middleware from "../middlewares"
 
 const route = express.Router()
 
@@ -10,6 +11,8 @@ route.use('/', (req, res, next) => {
     next()
 })
 
-route.put('/accountVerification/update', adminController.verifyAccount)
+route.use(middleware.session)
+
+route.put('/accountVerification/update', accountController.verifyAccount)
 
 export default route
