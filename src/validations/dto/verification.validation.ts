@@ -1,25 +1,22 @@
-import { UserDto } from "../../dto";
+import { VerificationDto } from "../../dto";
 import { ValidationError } from "../../errors";
-import { UserValidation } from "../user.validation";
+import { VerificationValidation } from "../verification.validation";
 
-export default class UserDtoValidation {
-    validate(dto: UserDto): object[] | undefined {
+export default class VerificationDtoValidation {
+    validate(dto: VerificationDto): object[] | undefined {
         const errors = []
 
         for (const [key, value] of Object.entries(dto)) {
             try {
                 switch (key) {
-                    case 'name':
-                        dto.name = UserValidation.validateName(value)
+                    case 'token':
+                        VerificationValidation.validateToken(value)
                         break
-                    case 'surname':
-                        dto.surname = UserValidation.validateSurname(value)
+                    case 'accountType':
+                        VerificationValidation.validateAccountType(value)
                         break
-                    case 'username':
-                        dto.username = UserValidation.validateUsername(value)
-                        break
-                    case 'password':
-                        dto.password = UserValidation.validatePassword(value)
+                    case 'verified':
+                        VerificationValidation.validateVerified(value)
                         break
                     default:
                         throw new Error('Unknown key ' + key)
@@ -27,9 +24,9 @@ export default class UserDtoValidation {
             } catch (error) {
                 if (error instanceof ValidationError) {
                     errors.push({
-                        input: key, 
+                        field: key, 
                         value: value, 
-                        error: error
+                        error: error.message
                     })
                 } else {
                     throw error

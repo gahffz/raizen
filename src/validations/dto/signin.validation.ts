@@ -1,25 +1,19 @@
-import { UserDto } from "../../dto";
+import SigninDto from "../../dto/signin.dto";
 import { ValidationError } from "../../errors";
 import { UserValidation } from "../user.validation";
 
-export default class UserDtoValidation {
-    validate(dto: UserDto): object[] | undefined {
+export default class SigninDtoValidation {
+    validate(dto: SigninDto): object[] | undefined {
         const errors = []
 
         for (const [key, value] of Object.entries(dto)) {
             try {
                 switch (key) {
-                    case 'name':
-                        dto.name = UserValidation.validateName(value)
-                        break
-                    case 'surname':
-                        dto.surname = UserValidation.validateSurname(value)
-                        break
                     case 'username':
-                        dto.username = UserValidation.validateUsername(value)
+                        UserValidation.validateUsername(value)
                         break
                     case 'password':
-                        dto.password = UserValidation.validatePassword(value)
+                        UserValidation.validatePassword(value)
                         break
                     default:
                         throw new Error('Unknown key ' + key)

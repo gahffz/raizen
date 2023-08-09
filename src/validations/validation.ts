@@ -30,7 +30,7 @@ export namespace Validations {
         const maxLength = length?.max || 100
     
         if (value.length < minLength || value.length > maxLength) {
-            throw new ValidationError('Value range should be between ' + minLength + ' and ' + maxLength)
+            throw new ValidationError('Value length range should be between ' + minLength + ' and ' + maxLength)
         }
 
         switch (options?.spaces ?? 'TRIM_AND_EXTRAS') {
@@ -53,6 +53,36 @@ export namespace Validations {
             value = value.toLowerCase()
         }
 
+        return value
+    }
+
+    type Range = {
+        min?: number
+        max?: number
+    }
+
+    export function validateNonNullNumber(value: any, range?: Range): number {
+        if (typeof value !== 'number') {
+            throw new ValidationError('value is not a number')
+        }
+
+        const minRange = range?.min || 0
+        const maxRange = range?.max || 1000
+
+        if (value < minRange || value > maxRange) {
+            throw new ValidationError('Value range should be between ' + minRange + ' and ' + maxRange)
+        }
+        return value
+    }
+
+    export function validateNonNullBoolean(value: any, expected?: boolean): boolean {
+        if (typeof value !== 'boolean') {
+            throw new ValidationError('value is not a boolean')
+        }
+
+        if (typeof expected === 'boolean' && expected !== value) {
+            throw new ValidationError('value must be ' + expected + ' not ' + value)
+        }
         return value
     }
 }

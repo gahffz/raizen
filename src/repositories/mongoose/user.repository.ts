@@ -12,6 +12,10 @@ export default class UserMongoRepository implements UserRepository {
         const document = await UserModel.findById(id)
         return parseNullable(document)
     }
+    async getByUsername(username: string): Promise<User | null> {
+        const document = await UserModel.findOne({ username })
+        return parseNullable(document)
+    }
     async create(user: User): Promise<User> {
         const document = await UserModel.create(user)
         return parseNonNull(document)
@@ -30,6 +34,10 @@ export default class UserMongoRepository implements UserRepository {
     }
     async updateVerification(id: any, verified: boolean): Promise<User | null> {
         const document = await UserModel.findOneAndUpdate(id, { verified })
+        return parseNullable(document)
+    }
+    async updateAccountType(id: any, accountType: number): Promise<User | null> {
+        const document = await UserModel.findByIdAndUpdate(id, { accountType })
         return parseNullable(document)
     }
     async delete(id: any): Promise<any> {

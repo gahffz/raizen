@@ -5,6 +5,8 @@ export default interface UserRepository {
 
     getById(id: string): Promise<User | null>
 
+    getByUsername(username: string): Promise<User | null>
+
     create(user: User): Promise<User>
 
     updatePersonalInfo(id: any, user: UserPersonalInfoUpdate): Promise<User | null>
@@ -14,6 +16,8 @@ export default interface UserRepository {
     updatePassword(id: any, password: string): Promise<User | null>
 
     updateVerification(id: any, verified: boolean): Promise<User | null>
+
+    updateAccountType(id: any, accountType: number): Promise<User | null>
 
     delete(id: any): Promise<any>
 }

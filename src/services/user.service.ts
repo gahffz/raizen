@@ -7,4 +7,12 @@ export default class UserService {
     createUser(user: User): Promise<User> {
         return this.userRepository.create(user)
     }
+
+    editVerificationState(uid: any, verified: boolean): Promise<User | null> {
+        return this.userRepository.updateVerification(uid, verified)
+    }
+
+    editAccountType(uid: any, accountType: number): Promise<User | null> {
+        return this.userRepository.updateAccountType(uid, accountType)
+    }
 }

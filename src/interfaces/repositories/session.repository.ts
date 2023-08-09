@@ -9,7 +9,9 @@ export default interface SessionRepository {
 
     create(session: Session): Promise<Session>
 
-    updateValidity(id: any, valid: boolean): Promise<Session | null>
+    updateValidityByToken(token: string, valid: boolean): Promise<Session | null>
+
+    updateValiditiesByUid(uid: any, valid: boolean): Promise<void>
 
     delete(id: any): Promise<Session | null>
 }
