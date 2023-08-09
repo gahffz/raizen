@@ -2,7 +2,7 @@ import { UserDto } from "../../dto";
 import { ValidationError } from "../../errors";
 import { UserValidation } from "../user.validation";
 
-export class UserDtoValidation {
+export default class UserDtoValidation {
     validate(dto: UserDto): object[] | undefined {
         const errors = []
 
