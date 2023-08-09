@@ -20,9 +20,12 @@ export default class SessionMongoRepository implements SessionRepository {
         const document = await SessionModel.create(session)
         return parseNonNull(document)
     }
-    async updateValidity(id: any, valid: boolean): Promise<Session | null> {
-        const document = await SessionModel.findOneAndUpdate(id, { valid }, { new: true })
+    async updateValidityByToken(token: string, valid: boolean): Promise<Session | null> {
+        const document = await SessionModel.findOneAndUpdate({ token }, { valid }, { new: true })
         return parseNullable(document)
+    }
+    async updateValiditiesByUid(uid: any, valid: boolean): Promise<void> {
+        await SessionModel.updateMany({ uid }, { valid }).exec()
     }
     async delete(id: any): Promise<Session | null> {
         const document = await SessionModel.findOneAndDelete(id)
