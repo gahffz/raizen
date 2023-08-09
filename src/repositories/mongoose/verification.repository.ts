@@ -12,6 +12,10 @@ export default class VerificationMongoRepository implements VerificationReposito
         const document = await VerificationModel.findOne({ token })
         return parseNullable(document)
     }
+    async findByUid(uid: any): Promise<Verification | null> {
+        const document = await VerificationModel.findOne({ uid })
+        return parseNullable(document)
+    }
     async create(verification: Verification): Promise<Verification> {
         const document = await VerificationModel.create(verification)
         return parseNonNull(document)
