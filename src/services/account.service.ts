@@ -119,7 +119,7 @@ export default class AccountService {
 
         const sessionExpiration = this.getSessionExpiration(session.createdAt).getTime()
         if (Date.now() > sessionExpiration) {
-            throw new Error('Session expired')
+            throw new HttpClientError(400, 'Session expired')
         }
 
         return session
@@ -133,6 +133,6 @@ export default class AccountService {
     }
 
     private getSessionExpiration(createdAt: Date): Date {
-        return new Date(createdAt.getTime() + Date.now() + 60 * 60_000)
+        return new Date(createdAt.getTime() + 60 * 60_000)
     }
 }
