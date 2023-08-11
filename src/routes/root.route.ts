@@ -2,15 +2,27 @@ import middleware from "../middlewares"
 import accounts from "./accounts.route"
 import area from "./area.route"
 import admin from "./admin.route"
+import report from "./report.route"
 import express from "express"
 
 const route = express.Router()
 
 route.use('/accounts', accounts)
 
-route.use('/area', area)
-
 route.use('/admin', admin)
+
+route.use(express.json())
+
+route.use('/', (req, res, next) => {
+    res.contentType('application/json')
+    next()
+})
+
+route.use(middleware.session)
+
+route.use(area)
+
+route.use(report)
 
 route.use(middleware.error)
 
