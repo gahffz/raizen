@@ -39,9 +39,10 @@ function parseNullable(document: Document<Types.ObjectId, {}, SessionType> | nul
 
 function parseNonNull(document: Document<Types.ObjectId, {}, SessionType>): Session {
     const obj = document.toObject()
-    const { _id, ...rest } = obj
+    const { _id, uid, ...rest } = obj
     return {
         id: _id.toString(), 
+        uid: uid.toString(), 
         ...rest
     }
 }
